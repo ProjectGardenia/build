@@ -1,10 +1,23 @@
+set -e
+
+export PATH=$HOME/Gardenia/bin:$PATH
+
+# Build LLVM+Clang for the compiler and the LTO/LLVM-C libraries LD64 needs
+git clone https://github.com/llvm/llvm-project.git --branch llvmorg-9.0.1 --depth=1
+cd llvm-project
+mkdir build
+cd build
+cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_INSTALL_PREFIX:PATH=$HOME/Gardenia/ -G "Unix Makefiles" ../llvm
+make
+make install
+
 # Building libtapi is required for LD64 to build
 git clone https://github.com/tpoechtrager/apple-libtapi.git
 cd apple-libtapi
 INSTALLPREFIX=$HOME/Gardenia ./build.sh
 ./install.sh
-mkdir $HOME/Gardenia/include/llvm-c
-cp src/llvm/include/llvm-c/lto.h $HOME/Gardenia/include/llvm-c
+#mkdir $HOME/Gardenia/include/llvm-c
+#cp src/llvm/include/llvm-c/lto.h $HOME/Gardenia/include/llvm-c
 cd ..
 
 # Copy our own custom headers
