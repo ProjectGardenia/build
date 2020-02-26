@@ -10,6 +10,7 @@ cd build
 cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_INSTALL_PREFIX:PATH=$HOME/Gardenia/ -G "Unix Makefiles" ../llvm
 make
 make install
+cd ..
 
 # Building libtapi is required for LD64 to build
 git clone https://github.com/tpoechtrager/apple-libtapi.git
